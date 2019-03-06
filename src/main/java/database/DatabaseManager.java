@@ -1,3 +1,4 @@
+package database;
 
 
 import java.sql.*;
@@ -10,7 +11,7 @@ public class DatabaseManager {
 		try {
 			// Kobler til mySQL-server, og henter data derfra, avhengig av query-et som mates inn.
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			String conString = "jdbc:mysql://mysql.stud.ntnu.no/tobiasio_chef?serverTimezone=UTC";  
+			String conString = "jdbc:mysql://mysql.stud.ntnu.no/tobiasio_datdat?serverTimezone=UTC";  
 			Connection connection = DriverManager.getConnection(conString, "tobiasio_11", "gruppe11");
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(query);
@@ -40,7 +41,7 @@ public class DatabaseManager {
 		try {
 			// Kobler til mySQL-server, og henter data derfra, avhengig av update-n som mates inn.
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			String conString = "jdbc:mysql://mysql.stud.ntnu.no/tobiasio_chef?serverTimezone=UTC";  
+			String conString = "jdbc:mysql://mysql.stud.ntnu.no/tobiasio_datdat?serverTimezone=UTC";  
 			Connection connection = DriverManager.getConnection(conString, "tobiasio_11", "gruppe11");
 			Statement statement = connection.createStatement();
 			int rowsAffected = statement.executeUpdate(update);
@@ -58,6 +59,6 @@ public class DatabaseManager {
 	
 	
 	public static void main(String[] args) {
-		System.out.println(DatabaseManager.sendQuery("SELECT * FROM recipee"));
+		System.out.println(DatabaseManager.sendQuery("SELECT * FROM Machine"));
 	}
 }
