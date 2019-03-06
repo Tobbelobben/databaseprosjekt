@@ -50,9 +50,44 @@ public class WorkoutManager {
 		return DatabaseManager.sendUpdate(update);
 	}
 	
-	public static int addOrdinaryExercise(String exerciseName, )
+	public static int addOrdinaryExercise(String exerciseName, String description) {
+		if(exerciseNameExists(exerciseName)) {throw new IllegalStateException("Exercise name already exists");}
+		String update = "INSERT INTO Exercise(exerciseName) VALUES('" + exerciseName + "')";
+		DatabaseManager.sendUpdate(update);
+		int exerciseID = getExerciseID(exerciseName);
+		update = "INSERT INTO OrdinaryExercise VALUES (" + exerciseID + ",'" + description + "')";
+		return DatabaseManager.sendUpdate(update);
+	}
+	
+	public static boolean groupNameExists(String name) {
+		String query = "SELECT groupID FROM ExerciseGroup WHERE groupName = '" + name + "'";
+		return DatabaseManager.sendQuery(query).size()>0;
+	}
+	
+	public static int getGroupID(String groupName) {
+		String query = "SELECT groupID FROM ExerciseGroup WHERE groupName = '" + groupName + "'";
+		ArrayList<HashMap<String,String>> maps = DatabaseManager.sendQuery(query);
+		if(maps.size()>1) {throw new IllegalStateException("Several groups with same name");}
+		else if(maps.size()==0) {throw new IllegalArgumentException("No group with that name");}
+		return Integer.parseInt(maps.get(0).get("groupID"));
+	}
+	
+	public static int addGroup(String groupName) {
+		if(groupNameExists(groupName)) {throw new IllegalStateException("Group name already exists");}
+		String update = "INSERT INTO ExerciseGroup(groupName) VALUES('" + groupName + "')";
+		return DatabaseManager.sendUpdate(update);
+	}
+	
+	public static int addExerciseInGroup(String groupName, String exerciseName) {
+		if(!groupNameExists(groupName)) {throw new IllegalArgumentException("Group doesn't exist!");}
+		if(!exerciseNameExists(exerciseName)) {throw new IllegalArgumentException("Exercise doesn't exist!");}
+		int groupID = getGroupID(groupName);
+		int exerciseID = getExerciseID(exerciseName);
+		String update = "INSERT INTO GroupContainsExercise VALUES(" + groupID + "," + exerciseID + ")";
+		return DatabaseManager.sendUpdate(update);
+	}
 	
 	public static void main(String[] args) {
-		System.out.println(addMachineExercise("Leggpresmaskin","Leggpres",10,10));
+		System.out.println(addOrdinaryExercise("Hangups","Løft hele kroppen opp og ned"));
 	}
 }
