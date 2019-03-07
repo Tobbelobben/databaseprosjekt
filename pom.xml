@@ -11,5 +11,13 @@
     <type>jar</type>
     <scope>compile</scope>
     </dependency>
+    <dependency>
+    
+<!-- https://mvnrepository.com/artifact/org.openjfx/javafx-fxml -->
+
+  		<groupId>org.openjfx</groupId>
+		<artifactId>javafx-fxml</artifactId>
+		<version>11-ea+25</version>
+  	</dependency>
   </dependencies>
 </project>

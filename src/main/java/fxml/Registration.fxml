@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane prefHeight="447.0" prefWidth="497.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/9.0.1">
+   <children>
+      <Pane prefHeight="447.0" prefWidth="497.0">
+         <children>
+            <Text layoutX="177.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registrering" />
+            <TextField layoutX="177.0" layoutY="83.0" prefHeight="25.0" prefWidth="107.0" promptText="Apparat" />
+            <TextField layoutX="14.0" layoutY="83.0" promptText="Apparatnavn" />
+            <Button layoutX="14.0" layoutY="408.0" mnemonicParsing="false" text="Registrer apparat" />
+            <TextField layoutX="172.0" layoutY="117.0" prefHeight="25.0" prefWidth="117.0" promptText="Øvelsessnavn" />
+            <TextField layoutX="197.0" layoutY="152.0" prefHeight="25.0" prefWidth="64.0" promptText="Sett (tall)" />
+            <TextField layoutX="201.0" layoutY="177.0" prefHeight="25.0" prefWidth="57.0" promptText="Kilo (tall)" />
+            <Button layoutX="180.0" layoutY="211.0" mnemonicParsing="false" text="Registrer øvelse" />
+            <TextArea layoutX="14.0" layoutY="201.0" prefHeight="200.0" prefWidth="149.0" promptText="Forklaring på apparat" />
+            <Text layoutX="14.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nytt apparat" />
+            <Text layoutX="183.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ny apparatøvelse" />
+            <Text layoutX="342.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ny ordinær øvelse" />
+            <TextField layoutX="342.0" layoutY="83.0" prefHeight="25.0" prefWidth="117.0" promptText="Øvelsessnavn" />
+            <Button layoutX="350.0" layoutY="211.0" mnemonicParsing="false" text="Registrer øvelse" />
+            <TextArea layoutX="301.0" layoutY="111.0" prefHeight="98.0" prefWidth="192.0" promptText="Beskrivelse" />
+            <Text layoutX="183.0" layoutY="260.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ny treningsøkt" />
+            <TextField layoutX="175.0" layoutY="264.0" prefHeight="25.0" prefWidth="132.0" promptText="Øvelse (legg til flere)" />
+            <Button layoutX="324.0" layoutY="264.0" mnemonicParsing="false" text="Legg til øvelse i økt" />
+            <TextField layoutX="177.0" layoutY="289.0" prefHeight="25.0" prefWidth="78.0" promptText="Form (1-10)" />
+            <TextField layoutX="177.0" layoutY="314.0" prefHeight="25.0" prefWidth="107.0" promptText=" Prestasjon (1-10)" />
+            <TextArea layoutX="172.0" layoutY="339.0" prefHeight="98.0" prefWidth="200.0" promptText="Notat (valgfritt)" />
+            <Button layoutX="374.0" layoutY="339.0" mnemonicParsing="false" text="Legg til økt" />
+            <Button layoutX="413.0" layoutY="408.0" mnemonicParsing="false" text="Tilbake" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
