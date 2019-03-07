@@ -1,7 +1,10 @@
 package database;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+
 
 public class WorkoutManager {
 	
@@ -97,11 +100,33 @@ public class WorkoutManager {
 		ArrayList<HashMap<String,String>> sessions = DatabaseManager.sendQuery(query);
 		if(sessions.size() == 0) {throw new IllegalStateException("No exercise sessions registered");}
 		return sessions;
-		
+	}
+	
+	
+	public static int addExerciseSession(Date datetime, int duration, int form, int performance) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String sqlDatetime = sdf.format(datetime); // formater datetime til sql-format
+		String update = "INSERT INTO ExerciseSession (origin, duration, form, performance) "
+				+ "VALUES('" + sqlDatetime + "'," + duration + "," + form + "," + performance + ")";
+		return DatabaseManager.sendUpdate(update);
+	}
+	
+	public static boolean noteExists(int sessionID) {
+		String query = "SELECT sessionID FROM Note WHERE sessionID = " + sessionID;
+		return DatabaseManager.sendQuery(query).size()>0;
+	}
+	
+	public static int addExerciseNote(int sessionID, String noteText) {
+		if(noteExists(sessionID)) {throw new IllegalStateException("Session already have a note");}
+		String update = "INSERT INTO Note (noteText) VALUES('" + noteText + "')";
+		return DatabaseManager.sendUpdate(update);
 	}
 	
 	
 	public static void main(String[] args) {
-		System.out.println(addOrdinaryExercise("Hangups","Løft hele kroppen opp og ned"));
+		//System.out.println(addOrdinaryExercise("Hangups","Løft hele kroppen opp og ned"));
+		Date date = new Date();
+		int result = addExerciseSession(date, 60, 3, 7);
+		System.out.println(result);
 	}
 }
