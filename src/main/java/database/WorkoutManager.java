@@ -87,6 +87,20 @@ public class WorkoutManager {
 		return DatabaseManager.sendUpdate(update);
 	}
 	
+	
+	public static ArrayList<HashMap<String, String>> getNLastExerciseSessions(int n) {
+		// Henter ut og returnerer de n siste treningsøktene 
+		String query = "SELECT * "
+				+ "FROM ExerciseSession as E INNER JOIN Note on (E.sessionID = Note.sessionID) "
+				+ "ORDER BY E.origin DESC "
+				+ "LIMIT " + n; 
+		ArrayList<HashMap<String,String>> sessions = DatabaseManager.sendQuery(query);
+		if(sessions.size() == 0) {throw new IllegalStateException("No exercise sessions registered");}
+		return sessions;
+		
+	}
+	
+	
 	public static void main(String[] args) {
 		System.out.println(addOrdinaryExercise("Hangups","Løft hele kroppen opp og ned"));
 	}
