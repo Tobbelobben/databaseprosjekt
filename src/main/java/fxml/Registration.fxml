@@ -34,6 +34,7 @@
             <TextArea fx:id="note" layoutX="172.0" layoutY="339.0" prefHeight="98.0" prefWidth="200.0" promptText="Notat (valgfritt)" />
             <Button layoutX="374.0" layoutY="339.0" mnemonicParsing="false" onAction="#registerSession" text="Legg til økt" />
             <Button layoutX="413.0" layoutY="408.0" mnemonicParsing="false" onAction="#back" text="Tilbake" />
+            <TextField fx:id="duration" layoutX="258.0" layoutY="289.0" prefHeight="25.0" prefWidth="117.0" promptText="Lengde i min (tall)" />
          </children>
       </Pane>
    </children>
