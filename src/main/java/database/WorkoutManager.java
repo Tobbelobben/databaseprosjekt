@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 
 public class WorkoutManager {
@@ -102,13 +103,39 @@ public class WorkoutManager {
 		return sessions;
 	}
 	
-	
-	public static int addExerciseSession(Date datetime, int duration, int form, int performance) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String sqlDatetime = sdf.format(datetime); // formater datetime til sql-format
-		String update = "INSERT INTO ExerciseSession (origin, duration, form, performance) "
-				+ "VALUES('" + sqlDatetime + "'," + duration + "," + form + "," + performance + ")";
+	public static int addExerciseToSession(int sessionID, int exerciseID) {
+		String update = "INSERT INTO ExerciseInSession (sessionID, exerciseID) "
+				+ "VALUES(" + sessionID + "," + exerciseID + ")";
+		
 		return DatabaseManager.sendUpdate(update);
+	}
+	
+	public static int getSessionID(String datetime) {
+		String query = "SELECT sessionID FROM ExerciseSession WHERE origin = '" + datetime + "'";
+		ArrayList<HashMap<String,String>> maps = DatabaseManager.sendQuery(query);
+		if(maps.size()>1) {throw new IllegalStateException("Several duplicate sessions");}
+		else if(maps.size()==0) {throw new IllegalArgumentException("No session with that date");}
+		return Integer.parseInt(maps.get(0).get("sessionID"));
+	}
+	
+	public static int addExerciseSession(String datetime, int duration, int form, int performance, List<String> exercises, String noteText) {
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//		String sqlDatetime = sdf.format(datetime); // formater datetime til sql-format
+		String update = "INSERT INTO ExerciseSession (origin, duration, form, performance) "
+				+ "VALUES('" + datetime + "'," + duration + "," + form + "," + performance + ")";
+		int result = DatabaseManager.sendUpdate(update);
+		int sessionID = getSessionID(datetime);
+		if(noteText != null || noteText == "") {
+			addExerciseNote(sessionID, noteText);
+		}
+		
+		
+		for(String exercise : exercises) {
+			int exerciseID = getExerciseID(exercise);
+			addExerciseToSession(sessionID, exerciseID);
+		}
+		
+		return result;
 	}
 	
 	public static boolean noteExists(int sessionID) {
@@ -117,16 +144,19 @@ public class WorkoutManager {
 	}
 	
 	public static int addExerciseNote(int sessionID, String noteText) {
+		System.out.println(sessionID);
 		if(noteExists(sessionID)) {throw new IllegalStateException("Session already have a note");}
-		String update = "INSERT INTO Note (noteText) VALUES('" + noteText + "')";
+		String update = "INSERT INTO Note (sessionID, noteText) VALUES("+sessionID+",'"+ noteText + "')";
 		return DatabaseManager.sendUpdate(update);
 	}
 	
 	
 	public static void main(String[] args) {
 		//System.out.println(addOrdinaryExercise("Hangups","Løft hele kroppen opp og ned"));
-		Date date = new Date();
-		int result = addExerciseSession(date, 60, 3, 7);
-		System.out.println(result);
+//		Date date = new Date();
+//		int result = addExerciseSession(date, 60, 3, 7);
+		List<String> exercises = new ArrayList<>();
+		
+		addExerciseSession("2019-12-01 12:12:12", 4, 8, 9, exercises, "onfeonf");
 	}
 }
