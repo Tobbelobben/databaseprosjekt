@@ -154,6 +154,19 @@ public class WorkoutManager {
 	}
 	
 	
+	public static ArrayList<HashMap<String, String>> getExercisesInGroup(String groupName) {
+		// Henter ut og returnerer de n siste treningsøktene 
+		
+		int groupID = getGroupID(groupName);
+		String query = "SELECT exerciseName"
+				+ " FROM Exercise NATURAL JOIN GroupContainsExercise "
+				+ "WHERE GroupContainsExercise.groupID = " + groupID; 
+		ArrayList<HashMap<String,String>> exercises = DatabaseManager.sendQuery(query);
+		if(exercises.size() == 0) {throw new IllegalStateException("No exercise found");}
+		return exercises;
+	}
+	
+	
 	public static void main(String[] args) {
 
 	}
