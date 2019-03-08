@@ -10,7 +10,9 @@ public class WorkoutManager {
 			String update = "INSERT INTO Machine(machineName, explanation) VALUES ('" + name + "','" + explanation + "')";
 			return DatabaseManager.sendUpdate(update);
 		}
-		return 0;
+		else {
+			throw new IllegalStateException("Machine already exists");
+		}
 	}
 	
 	public static boolean machineNameExists(String name) {

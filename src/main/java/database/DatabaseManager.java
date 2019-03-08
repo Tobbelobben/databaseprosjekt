@@ -47,7 +47,6 @@ public class DatabaseManager {
 			int rowsAffected = statement.executeUpdate(update);
 			connection.close();
 			
-			
 			return rowsAffected;
 			
 		} catch (ClassNotFoundException| SQLException e) {
