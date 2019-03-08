@@ -93,8 +93,8 @@ public class WorkoutManager {
 	
 	public static ArrayList<HashMap<String, String>> getNLastExerciseSessions(int n) {
 		// Henter ut og returnerer de n siste treningsøktene 
-		String query = "SELECT * "
-				+ "FROM ExerciseSession as E INNER JOIN Note on (E.sessionID = Note.sessionID) "
+		String query = "SELECT E.sessionID, origin, duration, form, performance, noteText "
+				+ "FROM ExerciseSession as E LEFT OUTER JOIN Note on (E.sessionID = Note.sessionID) "
 				+ "ORDER BY E.origin DESC "
 				+ "LIMIT " + n; 
 		ArrayList<HashMap<String,String>> sessions = DatabaseManager.sendQuery(query);
@@ -118,15 +118,17 @@ public class WorkoutManager {
 	
 	public static int addExerciseNote(int sessionID, String noteText) {
 		if(noteExists(sessionID)) {throw new IllegalStateException("Session already have a note");}
-		String update = "INSERT INTO Note (noteText) VALUES('" + noteText + "')";
+		String update = "INSERT INTO Note (sessionID, noteText) VALUES(" + sessionID + ",'" + noteText + "')";
 		return DatabaseManager.sendUpdate(update);
 	}
 	
 	
 	public static void main(String[] args) {
-		//System.out.println(addOrdinaryExercise("Hangups","Løft hele kroppen opp og ned"));
-		Date date = new Date();
-		int result = addExerciseSession(date, 60, 3, 7);
-		System.out.println(result);
+//		System.out.println(addOrdinaryExercise("Hangups","Løft hele kroppen opp og ned"));
+		ArrayList<HashMap<String,String>> sessions = getNLastExerciseSessions(3);
+//		System.out.println(sessions);
+		for (HashMap<String,String> session : sessions) {
+			System.out.println(session);
+		}
 	}
 }
