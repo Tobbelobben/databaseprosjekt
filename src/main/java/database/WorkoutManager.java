@@ -84,7 +84,7 @@ public class WorkoutManager {
 	}
 	
 	public static int addExerciseInGroup(String groupName, String exerciseName) {
-		if(!groupNameExists(groupName)) {throw new IllegalArgumentException("Group doesn't exist!");}
+		if(!groupNameExists(groupName)) {throw new IllegalStateException("Group doesn't exist!");}
 		if(!exerciseNameExists(exerciseName)) {throw new IllegalArgumentException("Exercise doesn't exist!");}
 		int groupID = getGroupID(groupName);
 		int exerciseID = getExerciseID(exerciseName);
