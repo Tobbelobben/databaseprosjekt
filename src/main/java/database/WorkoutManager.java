@@ -153,7 +153,7 @@ public class WorkoutManager {
 		return DatabaseManager.sendUpdate(update);
 	}
 	
-	public ArrayList<HashMap<String,String>> getMachineExercises(String machineName){
+	public static ArrayList<HashMap<String,String>> getMachineExercises(String machineName){
 		int id = getMachineID(machineName);
 		String query = "SELECT * FROM Machine NATURAL JOIN MachineExercise NATURAL JOIN Exercise WHERE MachineID = " + id;
 		return DatabaseManager.sendQuery(query);
@@ -161,6 +161,6 @@ public class WorkoutManager {
 	
 	
 	public static void main(String[] args) {
-
+		System.out.println(getMachineExercises("leggpresmaskin"));
 	}
 }

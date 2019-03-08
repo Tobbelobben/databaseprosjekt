@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import database.WorkoutManager;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -15,15 +16,15 @@ import javafx.scene.control.TextField;
 
 public class MachineController {
 	
-	TextField machine;
-	TextArea area;
+	@FXML TextField machine;
+	@FXML TextArea area;
 	
-	public void seeExercises() {
+	@FXML public void seeExercises() {
 		String s = "";
 		try{
 			ArrayList<HashMap<String,String>> maps = WorkoutManager.getMachineExercises(machine.getText());
 			for(HashMap<String,String> map : maps) {
-				s += map.get("exerciseName") + "\n"; 
+				s += map.get("exerciseName") + ": " + map.get("sets") + " sett, " + map.get("kilos") + " kilo \n"; 
 			}
 			area.setText(s);
 		}
@@ -34,7 +35,7 @@ public class MachineController {
 		
 	}
 	
-	public void back(ActionEvent event) throws IOException {
+	@FXML public void back(ActionEvent event) throws IOException {
 		Scene scene = ((Node) event.getSource()).getScene();
 		scene.setRoot((Parent) FXMLLoader.load(getClass().getResource("Menu.fxml")));
 	}
