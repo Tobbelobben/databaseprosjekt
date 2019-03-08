@@ -144,7 +144,6 @@ public class WorkoutManager {
 	}
 	
 	public static int addExerciseNote(int sessionID, String noteText) {
-		System.out.println(sessionID);
 		if(noteExists(sessionID)) {throw new IllegalStateException("Session already have a note");}
 		String update = "INSERT INTO Note (sessionID, noteText) VALUES("+sessionID+",'"+ noteText + "')";
 		return DatabaseManager.sendUpdate(update);
