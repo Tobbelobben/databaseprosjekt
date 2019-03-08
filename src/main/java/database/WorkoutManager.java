@@ -1,7 +1,10 @@
 package database;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+
 
 public class WorkoutManager {
 	
@@ -89,7 +92,45 @@ public class WorkoutManager {
 		return DatabaseManager.sendUpdate(update);
 	}
 	
+	
+	public static ArrayList<HashMap<String, String>> getNLastExerciseSessions(int n) {
+		// Henter ut og returnerer de n siste treningsøktene 
+		String query = "SELECT E.sessionID, origin, duration, form, performance, noteText "
+				+ "FROM ExerciseSession as E LEFT OUTER JOIN Note on (E.sessionID = Note.sessionID) "
+				+ "ORDER BY E.origin DESC "
+				+ "LIMIT " + n; 
+		ArrayList<HashMap<String,String>> sessions = DatabaseManager.sendQuery(query);
+		if(sessions.size() == 0) {throw new IllegalStateException("No exercise sessions registered");}
+		return sessions;
+	}
+	
+	
+	public static int addExerciseSession(Date datetime, int duration, int form, int performance) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String sqlDatetime = sdf.format(datetime); // formater datetime til sql-format
+		String update = "INSERT INTO ExerciseSession (origin, duration, form, performance) "
+				+ "VALUES('" + sqlDatetime + "'," + duration + "," + form + "," + performance + ")";
+		return DatabaseManager.sendUpdate(update);
+	}
+	
+	public static boolean noteExists(int sessionID) {
+		String query = "SELECT sessionID FROM Note WHERE sessionID = " + sessionID;
+		return DatabaseManager.sendQuery(query).size()>0;
+	}
+	
+	public static int addExerciseNote(int sessionID, String noteText) {
+		if(noteExists(sessionID)) {throw new IllegalStateException("Session already have a note");}
+		String update = "INSERT INTO Note (sessionID, noteText) VALUES(" + sessionID + ",'" + noteText + "')";
+		return DatabaseManager.sendUpdate(update);
+	}
+	
+	
 	public static void main(String[] args) {
-		System.out.println(addOrdinaryExercise("Hangups","Løft hele kroppen opp og ned"));
+//		System.out.println(addOrdinaryExercise("Hangups","Løft hele kroppen opp og ned"));
+		ArrayList<HashMap<String,String>> sessions = getNLastExerciseSessions(3);
+//		System.out.println(sessions);
+		for (HashMap<String,String> session : sessions) {
+			System.out.println(session);
+		}
 	}
 }
