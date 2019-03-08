@@ -85,7 +85,7 @@ public class WorkoutManager {
 	}
 	
 	public static int addExerciseInGroup(String groupName, String exerciseName) {
-		if(!groupNameExists(groupName)) {throw new IllegalArgumentException("Group doesn't exist!");}
+		if(!groupNameExists(groupName)) {throw new IllegalStateException("Group doesn't exist!");}
 		if(!exerciseNameExists(exerciseName)) {throw new IllegalArgumentException("Exercise doesn't exist!");}
 		int groupID = getGroupID(groupName);
 		int exerciseID = getExerciseID(exerciseName);
@@ -151,6 +151,12 @@ public class WorkoutManager {
 		String update = "INSERT INTO Note (sessionID, noteText) VALUES("+sessionID+",'"+ noteText + "')";
 
 		return DatabaseManager.sendUpdate(update);
+	}
+	
+	public ArrayList<HashMap<String,String>> getMachineExercises(String machineName){
+		int id = getMachineID(machineName);
+		String query = "SELECT * FROM Machine NATURAL JOIN MachineExercise NATURAL JOIN Exercise WHERE MachineID = " + id;
+		return DatabaseManager.sendQuery(query);
 	}
 	
 	
