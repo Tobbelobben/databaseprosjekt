@@ -14,7 +14,9 @@ public class WorkoutManager {
 			String update = "INSERT INTO Machine(machineName, explanation) VALUES ('" + name + "','" + explanation + "')";
 			return DatabaseManager.sendUpdate(update);
 		}
-		return 0;
+		else {
+			throw new IllegalStateException("Machine already exists");
+		}
 	}
 	
 	public static boolean machineNameExists(String name) {
@@ -94,8 +96,8 @@ public class WorkoutManager {
 	
 	public static ArrayList<HashMap<String, String>> getNLastExerciseSessions(int n) {
 		// Henter ut og returnerer de n siste treningsøktene 
-		String query = "SELECT * "
-				+ "FROM ExerciseSession as E INNER JOIN Note on (E.sessionID = Note.sessionID) "
+		String query = "SELECT E.sessionID, origin, duration, form, performance, noteText "
+				+ "FROM ExerciseSession as E LEFT OUTER JOIN Note on (E.sessionID = Note.sessionID) "
 				+ "ORDER BY E.origin DESC "
 				+ "LIMIT " + n; 
 		ArrayList<HashMap<String,String>> sessions = DatabaseManager.sendQuery(query);
@@ -145,17 +147,14 @@ public class WorkoutManager {
 	
 	public static int addExerciseNote(int sessionID, String noteText) {
 		if(noteExists(sessionID)) {throw new IllegalStateException("Session already have a note");}
+
 		String update = "INSERT INTO Note (sessionID, noteText) VALUES("+sessionID+",'"+ noteText + "')";
+
 		return DatabaseManager.sendUpdate(update);
 	}
 	
 	
 	public static void main(String[] args) {
-		//System.out.println(addOrdinaryExercise("Hangups","Løft hele kroppen opp og ned"));
-//		Date date = new Date();
-//		int result = addExerciseSession(date, 60, 3, 7);
-		List<String> exercises = new ArrayList<>();
-		
-		addExerciseSession("2019-12-01 12:12:12", 4, 8, 9, exercises, "onfeonf");
+
 	}
 }
