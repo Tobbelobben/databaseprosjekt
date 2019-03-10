@@ -153,12 +153,13 @@ public class WorkoutManager {
 		return DatabaseManager.sendUpdate(update);
 	}
 	
-	public static int getExercises(String fromDate, String toDate, String exerciseName) {
+	public static ArrayList<HashMap<String, String>> getExercises(String fromDate, String toDate, String exerciseName) {
 		int exerciseID = getExerciseID(exerciseName);
-		String query = "SELECT * FROM Exercise as E INNER JOIN ExerciseInSession as ES on (E.exerciseID = ES.exerciseID) "
-				+ "";
-		
-		return 0;
+		String query = "SELECT E.exerciseID, E.exerciseName, ES.sessionID, ES.origin, ES.duration, ES.form, ES.performance "
+				+ "FROM (Exercise as E INNER JOIN ExerciseInSession as EIS on (E.exerciseID = EIS.exerciseID)) "
+				+ "INNER JOIN ExerciseSession as ES on (EIS.sessionID = ES.sessionID) "
+				+ "WHERE E.exerciseID = " + exerciseID;
+		return DatabaseManager.sendQuery(query);
 	}
 
 	public static ArrayList<HashMap<String,String>> getMachineExercises(String machineName){
