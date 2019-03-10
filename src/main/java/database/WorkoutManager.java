@@ -85,7 +85,7 @@ public class WorkoutManager {
 	}
 	
 	public static int addExerciseInGroup(String groupName, String exerciseName) {
-		if(!groupNameExists(groupName)) {throw new IllegalArgumentException("Group doesn't exist!");}
+		if(!groupNameExists(groupName)) {throw new IllegalStateException("Group doesn't exist!");}
 		if(!exerciseNameExists(exerciseName)) {throw new IllegalArgumentException("Exercise doesn't exist!");}
 		int groupID = getGroupID(groupName);
 		int exerciseID = getExerciseID(exerciseName);
@@ -160,9 +160,28 @@ public class WorkoutManager {
 		
 		return 0;
 	}
+
+	public static ArrayList<HashMap<String,String>> getMachineExercises(String machineName){
+		int id = getMachineID(machineName);
+		String query = "SELECT * FROM Machine NATURAL JOIN MachineExercise NATURAL JOIN Exercise WHERE MachineID = " + id;
+		return DatabaseManager.sendQuery(query);
+	}
+	
+	
+	public static ArrayList<HashMap<String, String>> getExercisesInGroup(String groupName) {
+		// Henter ut og returnerer de n siste treningsøktene 
+		
+		int groupID = getGroupID(groupName);
+		String query = "SELECT exerciseName"
+				+ " FROM Exercise NATURAL JOIN GroupContainsExercise "
+				+ "WHERE GroupContainsExercise.groupID = " + groupID; 
+		ArrayList<HashMap<String,String>> exercises = DatabaseManager.sendQuery(query);
+		if(exercises.size() == 0) {throw new IllegalStateException("No exercise found");}
+		return exercises;
+	}
 	
 	
 	public static void main(String[] args) {
-
+		System.out.println(getMachineExercises("leggpresmaskin"));
 	}
 }

@@ -7,15 +7,14 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane prefHeight="481.0" prefWidth="490.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/9.0.1">
+<AnchorPane fx:controller = "fxml.MachineController" prefHeight="481.0" prefWidth="490.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Pane prefHeight="481.0" prefWidth="490.0">
          <children>
-            <TextField layoutX="32.0" layoutY="48.0" promptText="Apparat" />
-            <Button layoutX="245.0" layoutY="48.0" mnemonicParsing="false" text="Se øvelser tilknyttet apparat" />
-            <TextArea layoutX="32.0" layoutY="90.0" prefHeight="314.0" prefWidth="389.0" />
-            <Button layoutX="54.0" layoutY="430.0" mnemonicParsing="false" text="Tilbake" />
+            <TextField fx:id="machine" layoutX="32.0" layoutY="48.0" promptText="Apparat" />
+            <Button layoutX="245.0" layoutY="48.0" mnemonicParsing="false" onAction="#seeExercises" text="Se øvelser tilknyttet apparat" />
+            <TextArea fx:id="area" layoutX="32.0" layoutY="90.0" prefHeight="314.0" prefWidth="389.0" />
+            <Button layoutX="54.0" layoutY="430.0" mnemonicParsing="false" onAction="#back" text="Tilbake" />
             <Text layoutX="148.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Apparater" />
          </children>
       </Pane>
