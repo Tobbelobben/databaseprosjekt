@@ -153,6 +153,14 @@ public class WorkoutManager {
 		return DatabaseManager.sendUpdate(update);
 	}
 	
+	public static int getExercises(String fromDate, String toDate, String exerciseName) {
+		int exerciseID = getExerciseID(exerciseName);
+		String query = "SELECT * FROM Exercise as E INNER JOIN ExerciseInSession as ES on (E.exerciseID = ES.exerciseID) "
+				+ "";
+		
+		return 0;
+	}
+	
 	
 	public static void main(String[] args) {
 
