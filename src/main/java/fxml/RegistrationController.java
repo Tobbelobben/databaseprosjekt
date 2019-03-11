@@ -12,34 +12,41 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import database.*;
 
 public class RegistrationController {
-	TextField machinefield, machinename, exercisename, sets, kilos, machineexp, ordexercisename, exercisedesc, exercises, form, prestasjon, note, duration;
-	ArrayList<String> exerciseStrings = new ArrayList<>();
+	@FXML TextField machinefield, machinename, exercisename, sets, kilos, ordexercisename, exercises, form, prestasjon, duration;
+	@FXML TextArea machineexp, note, exercisedesc;
+	@FXML ArrayList<String> exerciseStrings = new ArrayList<>();
 	
-	public void registerMachine() {
+	@FXML public void registerMachine() {
+		String name = machinename.getText();
+		String exp = machineexp.getText();
 		try {
-			WorkoutManager.addMachine(machinefield.getText(), machineexp.getText());
+			WorkoutManager.addMachine(name,exp);
+			machinename.setText("Machine added!");
 		}
 		catch(IllegalStateException e) {
 			machinefield.setText("Machine already exists");
 		}
 	}
 	
-	public void registerOExercise() {
+	@FXML public void registerOExercise() {
 		try {
 			WorkoutManager.addOrdinaryExercise(ordexercisename.getText(), exercisedesc.getText());
+			ordexercisename.setText("Exercise added");
 		}
 		catch(IllegalStateException e) {
 			ordexercisename.setText("Exercise already exists");
 		}
 	}
 	
-	public void registerMExercise() {
+	@FXML public void registerMExercise() {
 		try {
 			WorkoutManager.addMachineExercise(machinefield.getText(), exercisename.getText(), Integer.parseInt(kilos.getText()), Integer.parseInt(sets.getText()));
+			machinefield.setText("Exercise added!");
 		}
 		catch(IllegalStateException e) {
 			ordexercisename.setText("Exercise already exists");
@@ -53,7 +60,7 @@ public class RegistrationController {
 		
 	}
 	
-	public void addExerciseToSession() {
+	@FXML public void addExerciseToSession() {
 		if(!exerciseStrings.contains(exercises.getText())) {
 			exerciseStrings.add(exercises.getText());
 			return;
@@ -61,11 +68,12 @@ public class RegistrationController {
 		exercises.setText("exercise already added");
 	}
 	
-	public void registerSession() {
+	@FXML public void registerSession() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String sqlDatetime = sdf.format(new Date()); // formater datetime til sql-format
 		try {
 			WorkoutManager.addExerciseSession(sqlDatetime, Integer.parseInt(duration.getText()), Integer.parseInt(form.getText()), Integer.parseInt(prestasjon.getText()), exerciseStrings, note.getText());
+			note.setText("Session added!");
 		}
 		catch(NumberFormatException e) {
 			note.setText("kilos and sets must be ints");

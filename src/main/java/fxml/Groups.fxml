@@ -7,19 +7,20 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:controller = "fxml.GroupController" prefHeight="449.0" prefWidth="465.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="449.0" prefWidth="465.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxml.GroupController">
    <children>
       <Pane prefHeight="449.0" prefWidth="465.0">
          <children>
             <Text layoutX="159.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Grupper" />
             <TextField fx:id="group1" layoutX="14.0" layoutY="43.0" promptText="Gruppe" />
-            <Button fx:id="addGroup" layoutX="221.0" layoutY="43.0" mnemonicParsing="false" text="Legg til gruppe" />
+            <Button layoutX="221.0" layoutY="43.0" mnemonicParsing="false" onAction="#addGroup" text="Legg til gruppe" />
             <TextField fx:id="group2" layoutX="14.0" layoutY="84.0" promptText="Gruppe" />
             <TextField fx:id="exercise" layoutX="181.0" layoutY="84.0" prefHeight="25.0" prefWidth="106.0" promptText="Øvelse" />
-            <Button fx:id="addExerciseToGroup" layoutX="309.0" layoutY="84.0" mnemonicParsing="false" text="Legg til øvelse i gruppe" />
+            <Button layoutX="309.0" layoutY="84.0" mnemonicParsing="false" onAction="#addExerciseToGroup" text="Legg til øvelse i gruppe" />
             <TextField fx:id="group3" layoutX="14.0" layoutY="161.0" promptText="Gruppe" />
-            <Button fx:id="showGroup" layoutX="195.0" layoutY="161.0" mnemonicParsing="false" text="Vis øvelser i gruppe" />
-            <TextArea fx:id = "area" layoutX="14.0" layoutY="194.0" prefHeight="250.0" prefWidth="358.0" />
+            <Button layoutX="195.0" layoutY="161.0" mnemonicParsing="false" onAction="#showGroup" text="Vis øvelser i gruppe" />
+            <TextArea fx:id="area" layoutX="14.0" layoutY="194.0" prefHeight="250.0" prefWidth="358.0" />
+            <Button layoutX="379.0" layoutY="358.0" mnemonicParsing="false" onAction="#back" prefHeight="25.0" prefWidth="71.0" text="Tilbake" />
          </children>
       </Pane>
    </children>

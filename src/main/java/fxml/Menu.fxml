@@ -5,15 +5,15 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:controller = "fxml.MenuController" prefHeight="437.0" prefWidth="515.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="437.0" prefWidth="515.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxml.MenuController">
    <children>
-      <Pane prefHeight="437.0" prefWidth="515.0">
+      <Pane prefHeight="528.0" prefWidth="614.0">
          <children>
-            <Button onAction="#toRegistration" layoutX="57.0" layoutY="119.0" mnemonicParsing="false" text="Registrer" />
-            <Button onAction="#toSessions" layoutX="57.0" layoutY="180.0" mnemonicParsing="false" text="Siste økter" />
-            <Button onAction="#toExercises" layoutX="57.0" layoutY="243.0" mnemonicParsing="false" text="Info om økter" />
-            <Button onAction="#toGroups" layoutX="57.0" layoutY="306.0" mnemonicParsing="false" text="Grupper" />
-            <Button onAction="#toMachines" layoutX="57.0" layoutY="365.0" mnemonicParsing="false" text="Apparater" />
+            <Button layoutX="57.0" layoutY="119.0" mnemonicParsing="false" onAction="#toRegistration" text="Registrer" />
+            <Button layoutX="57.0" layoutY="180.0" mnemonicParsing="false" onAction="#toSessions" text="Siste økter" />
+            <Button layoutX="57.0" layoutY="243.0" mnemonicParsing="false" onAction="#toExercises" text="Info om øvelser" />
+            <Button layoutX="57.0" layoutY="306.0" mnemonicParsing="false" onAction="#toGroups" text="Grupper" />
+            <Button layoutX="57.0" layoutY="365.0" mnemonicParsing="false" onAction="#toMachines" text="Apparater" />
             <Text layoutX="117.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ultimate treningsdagbok " wrappingWidth="200.5367431640625" />
          </children>
       </Pane>

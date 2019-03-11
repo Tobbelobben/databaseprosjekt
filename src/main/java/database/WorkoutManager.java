@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import database.DatabaseManager;
 
 
 public class WorkoutManager {
@@ -156,9 +159,10 @@ public class WorkoutManager {
 	public static ArrayList<HashMap<String, String>> getExercises(String fromDate, String toDate, String exerciseName) {
 		int exerciseID = getExerciseID(exerciseName);
 		String query = "SELECT E.exerciseID, E.exerciseName, ES.sessionID, ES.origin, ES.duration, ES.form, ES.performance "
-				+ "FROM (Exercise as E INNER JOIN ExerciseInSession as EIS on (E.exerciseID = EIS.exerciseID)) "
-				+ "INNER JOIN ExerciseSession as ES on (EIS.sessionID = ES.sessionID) "
-				+ "WHERE E.exerciseID = " + exerciseID;
+                + "FROM (Exercise as E INNER JOIN ExerciseInSession as EIS on (E.exerciseID = EIS.exerciseID)) "
+                + "INNER JOIN ExerciseSession as ES on (EIS.sessionID = ES.sessionID) "
+                + "WHERE E.exerciseID = " + exerciseID + " AND ES.origin BETWEEN '" + fromDate + "' AND '" + toDate + "'";
+		
 		return DatabaseManager.sendQuery(query);
 	}
 
@@ -181,8 +185,14 @@ public class WorkoutManager {
 		return exercises;
 	}
 	
+	public static List<String> getExercisesInSession(int sessionID){
+		String query = "SELECT exerciseName from Exercise NATURAL JOIN ExerciseInSession NATURAL JOIN ExerciseSession";
+		query+= " WHERE sessionID = " + sessionID;
+		return DatabaseManager.sendQuery(query).stream().map(a -> a.get("exerciseName")).collect(Collectors.toList());
+	}
+	
 	
 	public static void main(String[] args) {
-		System.out.println(getMachineExercises("leggpresmaskin"));
+		System.out.println(getExercisesInSession(9));
 	}
 }

@@ -1,28 +1,38 @@
 package fxml;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import database.WorkoutManager;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 public class GroupController {
-	TextField group1, group2, group3, exercise;
-	TextArea area;
+	@FXML TextField group1, group2, group3, exercise;
+	@FXML TextArea area;
 	
-	public void addGroup() {
+	@FXML public void addGroup() {
 		try {
+			System.out.println("trying to add group");
 			WorkoutManager.addGroup(group1.getText());
+			group1.setText("group added");
 		}
 		catch(IllegalStateException e) {
 			group1.setText("Group already exists");
 		}
 	}
 	
-	public void addExerciesToGroup() {
+	@FXML public void addExerciseToGroup() {
 		try {
 			WorkoutManager.addExerciseInGroup(group2.getText(), exercise.getText());
+			group2.setText("exercise added to group");
 		}
 		catch(IllegalStateException e) {
 			group1.setText("Group does not exists");
@@ -32,7 +42,7 @@ public class GroupController {
 		}
 	}
 	
-	public void showGroup() {
+	@FXML public void showGroup() {
 		try{
 			ArrayList<HashMap<String,String>> maps = WorkoutManager.getExercisesInGroup(group3.getText());
 			String exes = "";
@@ -44,5 +54,10 @@ public class GroupController {
 		catch(IllegalArgumentException e) {
 			group3.setText("Group does not exist!");
 		}
+	}
+	
+	@FXML public void back(ActionEvent event) throws IOException {
+		Scene scene = ((Node) event.getSource()).getScene();
+		scene.setRoot((Parent) FXMLLoader.load(getClass().getResource("Menu.fxml")));
 	}
 }
